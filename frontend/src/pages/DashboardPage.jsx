@@ -17,6 +17,7 @@ import MeasurementForm from '../components/AvatarCustomizer/MeasurementForm.jsx'
 import PoseControls from '../components/AvatarCustomizer/PoseControls.jsx';
 import CostumeControls from '../components/AvatarCustomizer/CostumeControls.jsx';
 import CostumeCatalog from '../components/CostumeLibrary/CostumeCatalog.jsx';
+import MediaGallery from '../components/MediaManager/MediaGallery.jsx';
 
 export const DashboardPage = () => {
   const { healthData, loading, error, latency, lastChecked, refresh } = useApiHealth(false);
@@ -78,6 +79,9 @@ export const DashboardPage = () => {
 
           {/* Data-Driven Costume Library Catalog (Phase 7) */}
           <CostumeCatalog />
+
+          {/* Cloudinary Media Management (Phase 8) */}
+          <MediaGallery />
         </div>
 
         {/* Right Column: Customization, Posing & Diagnostics */}
