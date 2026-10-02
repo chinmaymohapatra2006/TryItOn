@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useMeasurements, defaultMeasurements } from '../../context/MeasurementContext.jsx';
-import { Save, RotateCcw, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { useMeasurements, defaultMeasurements, BODY_PRESETS } from '../../context/MeasurementContext.jsx';
+import { Save, RotateCcw, AlertCircle, CheckCircle2, UserCheck, Sparkles } from 'lucide-react';
 
 const limits = {
   height: { min: 140, max: 220, required: true },
@@ -13,12 +13,12 @@ const limits = {
 };
 
 export const MeasurementForm = () => {
-  const { measurements, updateMeasurements, resetMeasurements } = useMeasurements();
+  const { measurements, activePreset, updateMeasurements, applyBodyPreset, resetMeasurements } = useMeasurements();
   const [formData, setFormData] = useState(measurements);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState(null);
 
-  // Sync form when global context changes (like a reset)
+  // Sync form when global context changes
   useEffect(() => {
     setFormData(measurements);
   }, [measurements]);
@@ -41,11 +41,8 @@ export const MeasurementForm = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-    
-    // Clear status
     setStatus(null);
 
-    // Validate on change for immediate feedback
     const errorMsg = validateField(name, value);
     setErrors(prev => ({
       ...prev,
@@ -55,7 +52,6 @@ export const MeasurementForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
     const newErrors = {};
     let isValid = true;
     
@@ -70,16 +66,13 @@ export const MeasurementForm = () => {
     setErrors(newErrors);
 
     if (isValid) {
-      // Parse to float before updating
       const parsedData = Object.keys(formData).reduce((acc, key) => {
         acc[key] = parseFloat(formData[key]);
         return acc;
       }, {});
       
       updateMeasurements(parsedData);
-      setStatus({ type: 'success', message: 'Avatar updated successfully!' });
-      
-      // Clear success message after 3 seconds
+      setStatus({ type: 'success', message: 'Body parameters and garment fitting updated!' });
       setTimeout(() => setStatus(null), 3000);
     } else {
       setStatus({ type: 'error', message: 'Please fix validation errors above.' });
@@ -122,8 +115,38 @@ export const MeasurementForm = () => {
     <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 backdrop-blur">
       <div className="flex items-center justify-between mb-6 border-b border-slate-800 pb-4">
         <div>
-          <h2 className="text-lg font-bold text-white">Body Measurements</h2>
-          <p className="text-xs text-slate-400 mt-1">Configure parameters to customize the 3D avatar.</p>
+          <h2 className="text-lg font-bold text-white flex items-center gap-2">
+            <UserCheck className="w-5 h-5 text-purple-400" />
+            Body Measurements & Fitting Profiles
+          </h2>
+          <p className="text-xs text-slate-400 mt-1">
+            Test and adapt costume fitting across distinct human body proportions.
+          </p>
+        </div>
+      </div>
+
+      {/* Body Preset Quick Selectors (Phase 6 Requirement) */}
+      <div className="mb-6 p-4 rounded-xl bg-slate-950/60 border border-slate-800">
+        <label className="block text-xs font-semibold text-slate-300 mb-2 uppercase tracking-wider flex items-center gap-1.5">
+          <Sparkles className="w-3.5 h-3.5 text-purple-400" />
+          <span>Phase 6 Test Configurations</span>
+        </label>
+        <div className="grid grid-cols-3 gap-2.5">
+          {Object.entries(BODY_PRESETS).map(([key, preset]) => (
+            <button
+              key={key}
+              type="button"
+              onClick={() => applyBodyPreset(key)}
+              className={`px-3 py-2 rounded-xl text-xs font-semibold transition-all border text-center ${
+                activePreset === key
+                  ? 'bg-purple-600/30 text-purple-200 border-purple-500 shadow-md ring-1 ring-purple-500/50'
+                  : 'bg-slate-900 text-slate-400 border-slate-800 hover:bg-slate-800 hover:text-slate-200'
+              }`}
+            >
+              <div className="font-bold">{preset.label.split(' ')[0]} Body</div>
+              <div className="text-[10px] text-slate-400 font-normal mt-0.5">{preset.height}cm • {preset.chest}cm</div>
+            </button>
+          ))}
         </div>
       </div>
 
@@ -155,7 +178,7 @@ export const MeasurementForm = () => {
             className="flex-1 inline-flex justify-center items-center gap-2 bg-purple-600 hover:bg-purple-500 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors shadow-lg shadow-purple-600/20"
           >
             <Save className="w-4 h-4" />
-            Apply Changes
+            Apply Fitting
           </button>
           
           <button

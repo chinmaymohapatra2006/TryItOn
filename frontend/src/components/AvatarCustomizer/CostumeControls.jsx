@@ -1,6 +1,9 @@
 import React from 'react';
 import { useCostume } from '../../context/CostumeContext.jsx';
-import { Shirt, Eye, EyeOff, Palette, Layers, RefreshCw } from 'lucide-react';
+import { useMeasurements } from '../../context/MeasurementContext.jsx';
+import { CostumeFitter } from '../../services/CostumeFitter.js';
+import { getCostumeMetadata } from '../../config/costumeMetadata.js';
+import { Shirt, Eye, EyeOff, Palette, Layers, RefreshCw, CheckCircle2, ShieldCheck } from 'lucide-react';
 
 const colorPresets = [
   { name: 'Indigo', value: '#6366f1' },
@@ -14,6 +17,10 @@ const colorPresets = [
 
 export const CostumeControls = () => {
   const { costume, toggleVisibility, updateCostume, resetCostume } = useCostume();
+  const { measurements } = useMeasurements();
+
+  const metadata = getCostumeMetadata(costume.id);
+  const dimensions = CostumeFitter.calculateBodyDimensions(measurements, metadata);
 
   return (
     <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 backdrop-blur mt-6">
@@ -21,9 +28,9 @@ export const CostumeControls = () => {
         <div>
           <h2 className="text-lg font-bold text-white flex items-center gap-2">
             <Shirt className="w-5 h-5 text-indigo-400" />
-            3D Costume Fitting
+            3D Costume Fitting Engine
           </h2>
-          <p className="text-xs text-slate-400 mt-1">Real-time garment alignment, color swatches, and layer controls.</p>
+          <p className="text-xs text-slate-400 mt-1">Real-time anatomical alignment, dynamic ease, and fabric styling.</p>
         </div>
 
         <button
@@ -74,6 +81,29 @@ export const CostumeControls = () => {
         </button>
       </div>
 
+      {/* Real-time Fitting Diagnostics Badge Card */}
+      <div className="mb-6 p-3.5 rounded-xl bg-slate-950/40 border border-slate-800/90 text-xs">
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-slate-400 font-medium">Fitted Body Profile:</span>
+          <span className="px-2 py-0.5 rounded bg-purple-950/60 text-purple-300 border border-purple-800/40 font-semibold text-[11px]">
+            {dimensions.profile}
+          </span>
+        </div>
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-slate-400 font-medium">Torso Scale Ratio:</span>
+          <span className="font-mono text-slate-200">
+            {(dimensions.chestRatio * 100).toFixed(1)}% Chest • {(dimensions.waistRatio * 100).toFixed(1)}% Waist
+          </span>
+        </div>
+        <div className="flex items-center justify-between">
+          <span className="text-slate-400 font-medium">Anti-Clipping Ease:</span>
+          <span className="flex items-center gap-1 text-emerald-400 font-medium">
+            <ShieldCheck className="w-3.5 h-3.5" />
+            Active (+2.8% to +3.5%)
+          </span>
+        </div>
+      </div>
+
       {/* Fabric Color Swatches */}
       <div className="mb-6">
         <label className="block text-xs font-semibold text-slate-300 mb-2 uppercase tracking-wider flex items-center gap-1.5">
@@ -111,8 +141,9 @@ export const CostumeControls = () => {
           <span>Mesh Wireframe</span>
         </button>
 
-        <span className="text-[11px] text-slate-400">
-          Skinning Status: <strong className="text-emerald-400 font-medium">Synchronized</strong>
+        <span className="text-[11px] text-slate-400 flex items-center gap-1">
+          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+          <span>CostumeFitter: <strong className="text-emerald-400 font-medium">Synchronized</strong></span>
         </span>
       </div>
     </div>
