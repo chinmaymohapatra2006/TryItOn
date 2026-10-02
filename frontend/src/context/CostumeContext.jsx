@@ -31,10 +31,11 @@ export const CostumeProvider = ({ children }) => {
   }, [selectedCategory]);
 
   const selectCostume = (id) => {
-    if (id === selectedCostumeId) return;
+    const resolved = getCostumeMetadata(id)?.id || id;
+    if (resolved === selectedCostumeId) return;
     setIsLoadingCostume(true);
     setCostumeError(null);
-    setSelectedCostumeId(id);
+    setSelectedCostumeId(resolved);
     // Loading state is cleanly resolved when R3F finishes compiling the new mesh
     setTimeout(() => setIsLoadingCostume(false), 250);
   };

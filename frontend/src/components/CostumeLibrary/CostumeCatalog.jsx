@@ -16,15 +16,15 @@ export const CostumeCatalog = () => {
   } = useCostume();
 
   return (
-    <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 backdrop-blur">
+    <div className="bg-white border border-[#E9E1D6] rounded-2xl p-6 shadow-sm">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-6 border-b border-slate-800">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-6 border-b border-[#E8DFC8]">
         <div>
-          <h2 className="text-lg font-bold text-white flex items-center gap-2">
-            <Layers className="w-5 h-5 text-purple-400" />
+          <h2 className="font-serif text-xl font-medium text-[#1C1917] flex items-center gap-2">
+            <Layers className="w-5 h-5 text-[#8C6D58]" />
             3D Virtual Wardrobe
           </h2>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-[#6E5341] mt-1">
             Browse and switch between traditional, casual, and formal garments in real-time.
           </p>
         </div>
@@ -32,14 +32,14 @@ export const CostumeCatalog = () => {
         {/* Loading / Status pill */}
         <div className="flex items-center gap-2">
           {isLoadingCostume ? (
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-purple-950/60 text-purple-300 border border-purple-800/40 animate-pulse">
-              <Loader2 className="w-3.5 h-3.5 animate-spin text-purple-400" />
-              Loading 3D Mesh...
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-[#F3EDE2] text-[#8C6D58] border border-[#E7DEC8] animate-pulse">
+              <Loader2 className="w-3.5 h-3.5 animate-spin text-[#8C6D58]" />
+              Fitting 3D Mesh...
             </span>
           ) : (
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-slate-950/60 text-slate-300 border border-slate-800">
-              <span className="w-2 h-2 rounded-full bg-emerald-400" />
-              Active: {costume.name}
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-[#FAF7F2] text-[#1C1917] border border-[#E7DEC8]">
+              <span className="w-2 h-2 rounded-full bg-emerald-500" />
+              Equipped: {costume.name}
             </span>
           )}
         </div>
@@ -51,10 +51,10 @@ export const CostumeCatalog = () => {
           <button
             key={cat}
             onClick={() => setSelectedCategory(cat)}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all border ${
+            className={`px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider whitespace-nowrap transition-all border ${
               selectedCategory === cat
-                ? 'bg-purple-600 text-white border-purple-500 shadow-md shadow-purple-600/20'
-                : 'bg-slate-950/60 text-slate-400 border-slate-800 hover:bg-slate-800 hover:text-slate-200'
+                ? 'bg-[#1C1917] text-white border-[#1C1917] shadow-sm'
+                : 'bg-[#FAF7F2] text-[#6E5341] border-[#E7DEC8] hover:border-[#8C6D58] hover:text-[#1C1917]'
             }`}
           >
             {cat}

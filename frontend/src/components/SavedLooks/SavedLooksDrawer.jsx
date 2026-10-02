@@ -65,22 +65,22 @@ export const SavedLooksDrawer = ({ isOpen, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end bg-slate-950/70 backdrop-blur-sm animate-in fade-in">
-      <div className="relative w-full max-w-md bg-slate-900 border-l border-slate-800 p-6 shadow-2xl flex flex-col h-full overflow-hidden">
+    <div className="fixed inset-0 z-50 flex justify-end bg-black/40 backdrop-blur-xs animate-in fade-in">
+      <div className="relative w-full max-w-md bg-white border-l border-[#E8DFC8] p-6 shadow-2xl flex flex-col h-full overflow-hidden text-[#1C1917]">
         {/* Header */}
-        <div className="flex items-center justify-between pb-4 border-b border-slate-800 shrink-0">
+        <div className="flex items-center justify-between pb-4 border-b border-[#E8DFC8] shrink-0">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-purple-600/20 text-purple-400 flex items-center justify-center border border-purple-500/30">
+            <div className="w-9 h-9 rounded-full bg-[#1C1917] text-[#D5C4A1] flex items-center justify-center shadow-xs">
               <Bookmark className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-white">Saved Wardrobe Looks</h3>
-              <p className="text-[11px] text-slate-400">Personal collection of custom fitted outfits & poses.</p>
+              <h3 className="font-serif text-lg font-medium text-[#1C1917]">Wardrobe Looks</h3>
+              <p className="text-[11px] text-[#6E5341]">Personal collection of custom fitted outfits & poses.</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+            className="p-1.5 rounded-full text-[#6E5341] hover:text-[#1C1917] hover:bg-[#FAF7F2] transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -88,8 +88,8 @@ export const SavedLooksDrawer = ({ isOpen, onClose }) => {
 
         {/* Save Current Outfit Section */}
         {isAuthenticated ? (
-          <div className="my-4 p-4 rounded-xl bg-slate-950/60 border border-slate-800 shrink-0">
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-2">
+          <div className="my-4 p-4 rounded-xl bg-[#FAF7F2] border border-[#E9E1D6] shrink-0">
+            <span className="text-[10px] font-bold text-[#6E5341] uppercase tracking-wider block mb-2">
               Save Current 3D Outfit
             </span>
             <form onSubmit={handleSaveCurrentLook} className="flex gap-2">
@@ -98,12 +98,12 @@ export const SavedLooksDrawer = ({ isOpen, onClose }) => {
                 value={lookName}
                 onChange={(e) => setLookName(e.target.value)}
                 placeholder="e.g. Silk Kurta Evening Fit"
-                className="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:ring-1 focus:ring-purple-500"
+                className="flex-1 bg-white border border-[#D9C4AF] rounded-lg px-3 py-1.5 text-xs text-[#1C1917] focus:outline-none focus:ring-1 focus:ring-[#1C1917]"
               />
               <button
                 type="submit"
                 disabled={saving || !lookName.trim()}
-                className="px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold shadow transition-all disabled:opacity-50 shrink-0 flex items-center gap-1"
+                className="px-4 py-1.5 rounded-lg bg-[#1C1917] hover:bg-[#2E2824] text-white text-xs font-semibold uppercase tracking-wider shadow transition-all disabled:opacity-50 shrink-0 flex items-center gap-1"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span>Save</span>
@@ -111,16 +111,16 @@ export const SavedLooksDrawer = ({ isOpen, onClose }) => {
             </form>
           </div>
         ) : (
-          <div className="my-4 p-3.5 rounded-xl bg-purple-950/40 border border-purple-800/40 text-xs text-purple-300 shrink-0">
-            Please sign in to save and sync looks to your account.
+          <div className="my-4 p-3.5 rounded-xl bg-[#F4EFE6] border border-[#E8DFC8] text-xs text-[#6E5341] shrink-0">
+            Please sign in to save and sync looks to your personal wardrobe.
           </div>
         )}
 
         {message && (
           <div className={`p-3 rounded-lg text-xs mb-3 flex items-center gap-2 shrink-0 ${
             message.type === 'success' 
-              ? 'bg-emerald-950/50 text-emerald-300 border border-emerald-800' 
-              : 'bg-rose-950/50 text-rose-300 border border-rose-800'
+              ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' 
+              : 'bg-rose-50 text-rose-800 border border-rose-200'
           }`}>
             {message.type === 'success' ? <CheckCircle2 className="w-4 h-4 shrink-0" /> : <AlertCircle className="w-4 h-4 shrink-0" />}
             <span>{message.text}</span>
@@ -130,25 +130,25 @@ export const SavedLooksDrawer = ({ isOpen, onClose }) => {
         {/* Saved Looks List */}
         <div className="flex-1 overflow-y-auto space-y-3 pr-1">
           {savedLooks.length === 0 ? (
-            <div className="py-16 text-center text-slate-500 text-xs">
+            <div className="py-16 text-center text-[#8C6D58] text-xs">
               <Bookmark className="w-8 h-8 mx-auto mb-2 opacity-40" />
-              <p>No saved looks yet.</p>
-              <p className="text-[11px] text-slate-500 mt-1">Configure an outfit and click "Save" above!</p>
+              <p className="font-serif text-sm">No saved looks yet.</p>
+              <p className="text-[11px] text-[#6E5341] mt-1">Configure an outfit and click "Save" above!</p>
             </div>
           ) : (
             savedLooks.map((look) => (
               <div
                 key={look.id}
-                className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 hover:border-slate-700 transition-all flex items-center justify-between gap-3"
+                className="p-3.5 rounded-xl bg-[#FAF7F2] border border-[#E9E1D6] hover:border-[#8C6D58] hover:shadow-xs transition-all flex items-center justify-between gap-3"
               >
                 <div className="flex items-center gap-3">
                   <span
-                    className="w-5 h-5 rounded-full border border-slate-700 shrink-0 shadow-sm"
-                    style={{ backgroundColor: look.colorway || '#6366f1' }}
+                    className="w-5 h-5 rounded-full border border-white shadow-xs shrink-0"
+                    style={{ backgroundColor: look.colorway || '#8C6D58' }}
                   />
                   <div>
-                    <h4 className="text-xs font-bold text-white">{look.look_name}</h4>
-                    <span className="text-[10px] text-slate-400 capitalize">
+                    <h4 className="font-serif text-sm font-semibold text-[#1C1917]">{look.look_name}</h4>
+                    <span className="text-[10px] text-[#6E5341] capitalize">
                       {look.costume_id.replace('-female', '')}
                     </span>
                   </div>
@@ -156,7 +156,7 @@ export const SavedLooksDrawer = ({ isOpen, onClose }) => {
 
                 <button
                   onClick={() => handleApplyLook(look)}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-purple-600 text-slate-300 hover:text-white text-xs font-semibold border border-slate-700 hover:border-purple-500 transition-all"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white hover:bg-[#1C1917] text-[#1C1917] hover:text-white text-xs font-semibold uppercase tracking-wider border border-[#1C1917] transition-all"
                 >
                   <Play className="w-3 h-3" />
                   <span>Equip</span>

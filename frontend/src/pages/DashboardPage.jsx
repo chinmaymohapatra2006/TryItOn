@@ -37,72 +37,72 @@ export const DashboardPage = () => {
   const [looksDrawerOpen, setLooksDrawerOpen] = useState(false);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 bg-[#FAF7F2] text-[#1C1917]">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-6 border-b border-slate-800">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-6 border-b border-[#E8DFC8]">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-purple-950/40 text-purple-400 text-xs font-semibold mb-2 border border-purple-800/30">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F3EDE2] text-[#8C6D58] text-xs font-semibold mb-2 border border-[#E7DEC8]">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Complete Virtual Try-On Studio</span>
+            <span>Virtual Fitting Studio • Real-Time 3D</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-            TryItOn Virtual Fitting Studio
+          <h1 className="font-serif text-3xl sm:text-4xl font-normal text-[#1C1917] tracking-tight">
+            TryItOn Atelier & Fitting Studio
           </h1>
-          <p className="text-sm text-slate-400 mt-1">
+          <p className="text-xs sm:text-sm text-[#6E5341] mt-1">
             {isAuthenticated 
               ? `Welcome back, ${user.name}! Your tailored looks and body parameters are active.` 
-              : 'Seamless 3D try-on: customize body parameters, equip costumes, and save your look.'}
+              : 'Precision 3D simulation: customize body measurements, select fabrics, and save your look.'}
           </p>
         </div>
 
         <div className="flex items-center gap-3">
           <button
             onClick={() => setLooksDrawerOpen(true)}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-purple-600/20 border border-purple-500/40 hover:bg-purple-600/30 text-purple-200 text-sm font-semibold transition-all shadow-md"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#1C1917] hover:bg-[#2E2824] text-white text-xs font-semibold tracking-wider uppercase transition-all shadow-sm"
           >
-            <Bookmark className="w-4 h-4 text-purple-400" />
+            <Bookmark className="w-3.5 h-3.5 text-[#D5C4A1]" />
             <span>View Wardrobe</span>
           </button>
 
           <button
             onClick={refresh}
             disabled={loading}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700/80 hover:bg-slate-800 text-slate-200 text-sm font-medium transition-all hover:border-slate-600 disabled:opacity-50"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white border border-[#E7DEC8] hover:border-[#8C6D58] text-[#1C1917] text-xs font-semibold uppercase tracking-wider transition-all disabled:opacity-50"
           >
-            <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin text-purple-400' : 'text-slate-400'}`} />
-            <span className="hidden sm:inline">{loading ? 'Pinging...' : 'Check API'}</span>
+            <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin text-[#8C6D58]' : 'text-[#8C6D58]'}`} />
+            <span className="hidden sm:inline">{loading ? 'Pinging...' : 'API Health'}</span>
           </button>
         </div>
       </div>
 
       {/* Visual Journey Stepper (Phase 10 Flow) */}
-      <div className="my-6 p-4 rounded-2xl bg-slate-900/60 border border-slate-800 flex flex-wrap items-center justify-between gap-4 text-xs">
-        <div className="flex items-center gap-2 font-semibold text-purple-400">
-          <span className="w-5 h-5 rounded-full bg-purple-600 text-white flex items-center justify-center text-[10px] font-bold">1</span>
+      <div className="my-6 p-4 rounded-2xl bg-white border border-[#E9E1D6] shadow-sm flex flex-wrap items-center justify-between gap-4 text-xs">
+        <div className="flex items-center gap-2 font-semibold text-[#1C1917]">
+          <span className="w-5 h-5 rounded-full bg-[#1C1917] text-white flex items-center justify-center text-[10px] font-bold">1</span>
           <span>Measurements</span>
         </div>
-        <div className="h-0.5 w-6 bg-slate-800 hidden sm:block" />
+        <div className="h-0.5 w-6 bg-[#E8DFC8] hidden sm:block" />
 
-        <div className="flex items-center gap-2 font-semibold text-indigo-400">
-          <span className="w-5 h-5 rounded-full bg-indigo-600 text-white flex items-center justify-center text-[10px] font-bold">2</span>
+        <div className="flex items-center gap-2 font-semibold text-[#8C6D58]">
+          <span className="w-5 h-5 rounded-full bg-[#8C6D58] text-white flex items-center justify-center text-[10px] font-bold">2</span>
           <span>3D Avatar</span>
         </div>
-        <div className="h-0.5 w-6 bg-slate-800 hidden sm:block" />
+        <div className="h-0.5 w-6 bg-[#E8DFC8] hidden sm:block" />
 
-        <div className="flex items-center gap-2 font-semibold text-pink-400">
-          <span className="w-5 h-5 rounded-full bg-pink-600 text-white flex items-center justify-center text-[10px] font-bold">3</span>
+        <div className="flex items-center gap-2 font-semibold text-[#6E5341]">
+          <span className="w-5 h-5 rounded-full bg-[#6E5341] text-white flex items-center justify-center text-[10px] font-bold">3</span>
           <span>Select Costume</span>
         </div>
-        <div className="h-0.5 w-6 bg-slate-800 hidden sm:block" />
+        <div className="h-0.5 w-6 bg-[#E8DFC8] hidden sm:block" />
 
-        <div className="flex items-center gap-2 font-semibold text-emerald-400">
-          <span className="w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[10px] font-bold">4</span>
+        <div className="flex items-center gap-2 font-semibold text-[#8A734C]">
+          <span className="w-5 h-5 rounded-full bg-[#8A734C] text-white flex items-center justify-center text-[10px] font-bold">4</span>
           <span>Automatic Fit</span>
         </div>
-        <div className="h-0.5 w-6 bg-slate-800 hidden sm:block" />
+        <div className="h-0.5 w-6 bg-[#E8DFC8] hidden sm:block" />
 
-        <div className="flex items-center gap-2 font-semibold text-amber-400">
-          <span className="w-5 h-5 rounded-full bg-amber-600 text-white flex items-center justify-center text-[10px] font-bold">5</span>
+        <div className="flex items-center gap-2 font-semibold text-[#1C1917]">
+          <span className="w-5 h-5 rounded-full bg-[#1C1917] text-[#D5C4A1] flex items-center justify-center text-[10px] font-bold">5</span>
           <span>3D Orbit & Save</span>
         </div>
       </div>
@@ -116,24 +116,24 @@ export const DashboardPage = () => {
           <div className="flex flex-col gap-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Box className="w-5 h-5 text-purple-400" />
-                <h2 className="text-lg font-bold text-white">3D Fitting Canvas</h2>
-                <span className="text-[11px] px-2 py-0.5 rounded-full bg-slate-800 text-purple-300 border border-slate-700 font-semibold">
+                <Box className="w-5 h-5 text-[#8C6D58]" />
+                <h2 className="font-serif text-xl font-medium text-[#1C1917]">3D Fitting Canvas</h2>
+                <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-[#F3EDE2] text-[#8C6D58] border border-[#E7DEC8] font-semibold">
                   Equipped: {costume.name}
                 </span>
               </div>
-              <span className="text-xs text-slate-400 flex items-center gap-1.5">
-                <Compass className="w-3.5 h-3.5 text-indigo-400" />
-                <span>360° Orbit & Zoom Enabled</span>
+              <span className="text-xs text-[#6E5341] flex items-center gap-1.5">
+                <Compass className="w-3.5 h-3.5 text-[#8C6D58]" />
+                <span>360° Orbit & Zoom Active</span>
               </span>
             </div>
 
             {/* 3D Scene Viewport */}
-            <div className="h-[530px] w-full">
+            <div className="h-[530px] w-full rounded-2xl overflow-hidden border border-[#E9E1D6] shadow-md bg-[#1C1917]">
               <Scene
                 autoRotateDefault={false}
                 showGridDefault={true}
-                className="w-full h-full shadow-2xl"
+                className="w-full h-full"
               />
             </div>
           </div>
@@ -160,31 +160,31 @@ export const DashboardPage = () => {
           <PoseControls />
 
           {/* API Health Monitor Card */}
-          <div className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800/90 backdrop-blur">
-            <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+          <div className="p-6 rounded-2xl bg-white border border-[#E9E1D6] shadow-sm">
+            <div className="flex items-center justify-between pb-4 border-b border-[#E8DFC8]">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-purple-600/10 border border-purple-600/20 flex items-center justify-center text-purple-400">
+                <div className="w-10 h-10 rounded-xl bg-[#F3EDE2] flex items-center justify-center text-[#8C6D58]">
                   <Activity className="w-5 h-5" />
                 </div>
                 <div>
-                  <h2 className="text-base font-bold text-white">API Health Status</h2>
-                  <p className="text-xs text-slate-400"><code className="text-purple-300">GET /api/health</code></p>
+                  <h2 className="text-sm font-bold text-[#1C1917]">API Health Status</h2>
+                  <p className="text-xs text-[#8C6D58] font-mono">GET /api/health</p>
                 </div>
               </div>
 
               <div>
                 {error ? (
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-rose-950/60 text-rose-300 border border-rose-800">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200">
                     <ShieldAlert className="w-3.5 h-3.5" />
                     Offline
                   </span>
                 ) : healthData ? (
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-950/60 text-emerald-300 border border-emerald-800">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">
                     <CheckCircle2 className="w-3.5 h-3.5" />
                     Online
                   </span>
                 ) : (
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-yellow-950/60 text-yellow-300 border border-yellow-800">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200">
                     Checking...
                   </span>
                 )}
@@ -193,35 +193,35 @@ export const DashboardPage = () => {
 
             {/* Metrics */}
             <div className="mt-4 grid grid-cols-2 gap-3">
-              <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80">
-                <span className="text-[11px] text-slate-400 font-medium">Latency</span>
-                <p className="text-base font-bold text-white mt-0.5">{latency || '--'}</p>
+              <div className="p-3 rounded-xl bg-[#FAF7F2] border border-[#E9E1D6]">
+                <span className="text-[11px] text-[#6E5341] font-medium">Latency</span>
+                <p className="text-base font-bold text-[#1C1917] mt-0.5">{latency || '--'}</p>
               </div>
 
-              <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80">
-                <span className="text-[11px] text-slate-400 font-medium">Uptime</span>
-                <p className="text-base font-bold text-white mt-0.5 truncate">{healthData?.uptime || '--'}</p>
+              <div className="p-3 rounded-xl bg-[#FAF7F2] border border-[#E9E1D6]">
+                <span className="text-[11px] text-[#6E5341] font-medium">Uptime</span>
+                <p className="text-base font-bold text-[#1C1917] mt-0.5 truncate">{healthData?.uptime || '--'}</p>
               </div>
             </div>
 
             {/* Sub-services */}
-            <div className="mt-4 p-3 rounded-xl bg-slate-950/40 border border-slate-800 space-y-2 text-xs">
+            <div className="mt-4 p-3 rounded-xl bg-[#FAF7F2] border border-[#E9E1D6] space-y-2 text-xs">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-1.5 text-slate-300">
-                  <Server className="w-3.5 h-3.5 text-purple-400" />
+                <div className="flex items-center gap-1.5 text-[#1C1917]">
+                  <Server className="w-3.5 h-3.5 text-[#8C6D58]" />
                   <span>Express Backend</span>
                 </div>
-                <span className="font-semibold text-emerald-400">
+                <span className="font-semibold text-emerald-700">
                   {healthData?.services?.server || (error ? 'Unreachable' : 'Initializing')}
                 </span>
               </div>
 
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-1.5 text-slate-300">
-                  <Database className="w-3.5 h-3.5 text-indigo-400" />
+                <div className="flex items-center gap-1.5 text-[#1C1917]">
+                  <Database className="w-3.5 h-3.5 text-[#8C6D58]" />
                   <span>Database Pool</span>
                 </div>
-                <span className="px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-mono text-[11px]">
+                <span className="px-2 py-0.5 rounded bg-[#EBDDCE] text-[#382920] font-mono text-[11px]">
                   {healthData?.services?.database || 'configured'}
                 </span>
               </div>
