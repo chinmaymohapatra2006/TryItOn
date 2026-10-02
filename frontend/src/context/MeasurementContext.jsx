@@ -46,8 +46,12 @@ const MeasurementContext = createContext();
 export const MeasurementProvider = ({ children }) => {
   const [activePreset, setActivePreset] = useState('average');
   const [measurements, setMeasurements] = useState(() => {
-    const saved = sessionStorage.getItem('tryiton_measurements');
-    return saved ? JSON.parse(saved) : defaultMeasurements;
+    try {
+      const saved = sessionStorage.getItem('tryiton_measurements');
+      return saved ? JSON.parse(saved) : defaultMeasurements;
+    } catch {
+      return defaultMeasurements;
+    }
   });
 
   useEffect(() => {

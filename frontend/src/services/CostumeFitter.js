@@ -9,9 +9,18 @@ export class CostumeFitter {
   /**
    * Step 1 & 2: Calculate body dimensions and scale ratios
    */
-  static calculateBodyDimensions(userMeasurements, metadata) {
-    const base = metadata.baseDimensions;
-    const ease = metadata.fabricEase || {
+  static calculateBodyDimensions(userMeasurements = {}, metadata = {}) {
+    const base = metadata?.baseDimensions || {
+      height: 170,
+      shoulderWidth: 40,
+      chest: 90,
+      waist: 70,
+      hip: 95,
+      armLength: 60,
+      legLength: 80,
+    };
+    const m = { ...base, ...(userMeasurements || {}) };
+    const ease = metadata?.fabricEase || {
       chest: 1.025,
       waist: 1.03,
       hip: 1.025,
@@ -19,35 +28,41 @@ export class CostumeFitter {
       arms: 1.018,
     };
 
-    const heightRatio = userMeasurements.height / base.height;
-    const shoulderRatio = (userMeasurements.shoulderWidth / base.shoulderWidth) * ease.shoulders;
-    const chestRatio = (userMeasurements.chest / base.chest) * ease.chest;
-    const waistRatio = (userMeasurements.waist / base.waist) * ease.waist;
-    const hipRatio = (userMeasurements.hip / base.hip) * ease.hip;
-    const armRatio = ((userMeasurements.armLength || base.armLength) / base.armLength) * ease.arms;
-    const legRatio = (userMeasurements.legLength || base.legLength) / base.legLength;
+    const heightRatio = (m.height || base.height) / (base.height || 170);
+    const shoulderRatio = ((m.shoulderWidth || base.shoulderWidth) / (base.shoulderWidth || 40)) * (ease.shoulders || 1.02);
+    const chestRatio = ((m.chest || base.chest) / (base.chest || 90)) * (ease.chest || 1.025);
+    const waistRatio = ((m.waist || base.waist) / (base.waist || 70)) * (ease.waist || 1.03);
+    const hipRatio = ((m.hip || base.hip) / (base.hip || 95)) * (ease.hip || 1.025);
+    const armRatio = (((m.armLength || base.armLength) / (base.armLength || 60)) * (ease.arms || 1.018));
+    const legRatio = (m.legLength || base.legLength) / (base.legLength || 80);
 
     return {
-      heightRatio,
-      shoulderRatio,
-      chestRatio,
-      waistRatio,
-      hipRatio,
-      armRatio,
-      legRatio,
-      // Dynamic body profile classification
-      profile: this.classifyBodyProfile(userMeasurements, base),
+      heightRatio: isNaN(heightRatio) ? 1 : heightRatio,
+      shoulderRatio: isNaN(shoulderRatio) ? 1 : shoulderRatio,
+      chestRatio: isNaN(chestRatio) ? 1 : chestRatio,
+      waistRatio: isNaN(waistRatio) ? 1 : waistRatio,
+      hipRatio: isNaN(hipRatio) ? 1 : hipRatio,
+      armRatio: isNaN(armRatio) ? 1 : armRatio,
+      legRatio: isNaN(legRatio) ? 1 : legRatio,
+      profile: this.classifyBodyProfile(m, base),
     };
   }
 
   /**
    * Classify body profile based on torso & height ratios
    */
-  static classifyBodyProfile(userMeasurements, base) {
+  static classifyBodyProfile(userMeasurements = {}, base = {}) {
+    const chest = userMeasurements.chest || base.chest || 90;
+    const waist = userMeasurements.waist || base.waist || 70;
+    const hip = userMeasurements.hip || base.hip || 95;
+    const bChest = base.chest || 90;
+    const bWaist = base.waist || 70;
+    const bHip = base.hip || 95;
+
     const averageRatio = (
-      (userMeasurements.chest / base.chest) +
-      (userMeasurements.waist / base.waist) +
-      (userMeasurements.hip / base.hip)
+      (chest / bChest) +
+      (waist / bWaist) +
+      (hip / bHip)
     ) / 3;
 
     if (averageRatio < 0.92) return 'Small / Slim';
@@ -58,8 +73,8 @@ export class CostumeFitter {
   /**
    * Step 3, 4 & 5: Compute scale, offsets, and rotations for each skeletal attachment bone
    */
-  static calculateBoneTransforms(dimensions, metadata, poseState = {}) {
-    const { offsets = {} } = metadata;
+  static calculateBoneTransforms(dimensions, metadata = {}, poseState = {}) {
+    const offsets = metadata?.offsets || {};
 
     const transforms = {
       // Hips: Controls lower torso, hip girth, and overall vertical height
@@ -130,7 +145,7 @@ export class CostumeFitter {
 
     // Dynamic anti-clipping depth bias scaling based on body profile
     // Larger bodies with high tension receive slightly deeper polygon offsets to prevent mesh interpenetration
-    const baseOffsetFactor = metadata.polygonOffset?.factor || -2.0;
+    const baseOffsetFactor = metadata?.polygonOffset?.factor || -2.0;
     const dynamicOffsetFactor = dimensions.profile === 'Larger / Plus' 
       ? baseOffsetFactor * 1.35 
       : dimensions.profile === 'Small / Slim' 

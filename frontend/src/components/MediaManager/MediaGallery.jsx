@@ -130,7 +130,7 @@ export const MediaGallery = () => {
               {/* Card Meta */}
               <div className="p-3">
                 <h4 className="text-xs font-semibold text-[#1C1917] truncate">
-                  {item.metadata?.title || item.public_id.split('/').pop()}
+                  {item.metadata?.title || item.public_id?.split('/')?.pop() || 'Costume Asset'}
                 </h4>
                 <div className="flex items-center justify-between text-[10px] text-[#6E5341] mt-1">
                   <span>{item.category}</span>

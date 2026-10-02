@@ -58,7 +58,7 @@ export const Navbar = () => {
               >
                 <Bookmark className="w-3.5 h-3.5 text-[#8C6D58]" />
                 <span className="hidden sm:inline">Wardrobe</span>
-                {savedLooks.length > 0 && (
+                {Boolean(savedLooks?.length > 0) && (
                   <span className="w-4 h-4 rounded-full bg-[#1C1917] text-white text-[10px] flex items-center justify-center font-bold">
                     {savedLooks.length}
                   </span>
@@ -69,8 +69,8 @@ export const Navbar = () => {
               {isAuthenticated ? (
                 <div className="flex items-center gap-2 pl-1">
                   <div className="hidden sm:flex flex-col text-right">
-                    <span className="text-xs font-bold text-[#1C1917] truncate max-w-[120px]">{user.name}</span>
-                    <span className="text-[10px] text-[#8C6D58] truncate max-w-[120px]">{user.email}</span>
+                    <span className="text-xs font-bold text-[#1C1917] truncate max-w-[120px]">{user?.name || 'Stylist'}</span>
+                    <span className="text-[10px] text-[#8C6D58] truncate max-w-[120px]">{user?.email || ''}</span>
                   </div>
                   <button
                     onClick={logout}

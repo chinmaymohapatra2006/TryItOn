@@ -119,9 +119,12 @@ export const COSTUME_METADATA = COSTUME_CATALOG.reduce((acc, item) => {
 }, {});
 
 export const getCostumeMetadata = (id = 'shirt-female') => {
-  if (COSTUME_METADATA[id]) return COSTUME_METADATA[id];
+  const safeId = (typeof id === 'string' && id.trim()) ? id.trim() : 'shirt-female';
+  if (COSTUME_METADATA[safeId]) return COSTUME_METADATA[safeId];
   // Support aliases like 'shirt', 'kurta', 'tshirt', 'jacket', 'sherwani'
-  const aliasMatch = COSTUME_CATALOG.find(c => c.id.startsWith(id) || id.startsWith(c.id.split('-')[0]));
+  const aliasMatch = COSTUME_CATALOG.find(c => 
+    c.id.startsWith(safeId) || safeId.startsWith(c.id.split('-')[0])
+  );
   if (aliasMatch) return aliasMatch;
   return COSTUME_CATALOG[0];
 };

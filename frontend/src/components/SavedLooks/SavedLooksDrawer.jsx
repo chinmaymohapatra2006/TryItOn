@@ -45,22 +45,22 @@ export const SavedLooksDrawer = ({ isOpen, onClose }) => {
   };
 
   const handleApplyLook = (look) => {
-    // 1. Select the costume
-    selectCostume(look.costume_id);
-    // 2. Apply colorway
+    if (!look) return;
+    const costumeId = look.costume_id || look.costumeId;
+    if (costumeId) {
+      selectCostume(costumeId);
+    }
     if (look.colorway) {
       updateActiveColor(look.colorway);
     }
-    // 3. Apply saved body measurements if present
     if (look.custom_parameters?.measurements) {
       updateMeasurements(look.custom_parameters.measurements);
     }
-    // 4. Apply saved pose if present
     if (look.custom_parameters?.pose) {
       updatePose(look.custom_parameters.pose);
     }
 
-    setMessage({ type: 'success', text: `Equipped "${look.look_name}"!` });
+    setMessage({ type: 'success', text: `Equipped "${look.look_name || look.lookName || 'Saved Look'}"!` });
     setTimeout(() => setMessage(null), 2500);
   };
 
@@ -138,7 +138,7 @@ export const SavedLooksDrawer = ({ isOpen, onClose }) => {
           ) : (
             savedLooks.map((look) => (
               <div
-                key={look.id}
+                key={look.id || Math.random()}
                 className="p-3.5 rounded-xl bg-[#FAF7F2] border border-[#E9E1D6] hover:border-[#8C6D58] hover:shadow-xs transition-all flex items-center justify-between gap-3"
               >
                 <div className="flex items-center gap-3">
@@ -147,9 +147,9 @@ export const SavedLooksDrawer = ({ isOpen, onClose }) => {
                     style={{ backgroundColor: look.colorway || '#8C6D58' }}
                   />
                   <div>
-                    <h4 className="font-serif text-sm font-semibold text-[#1C1917]">{look.look_name}</h4>
+                    <h4 className="font-serif text-sm font-semibold text-[#1C1917]">{look.look_name || look.lookName || 'Custom Outfit'}</h4>
                     <span className="text-[10px] text-[#6E5341] capitalize">
-                      {look.costume_id.replace('-female', '')}
+                      {String(look.costume_id || look.costumeId || 'costume').replace('-female', '')}
                     </span>
                   </div>
                 </div>

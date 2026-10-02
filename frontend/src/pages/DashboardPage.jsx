@@ -50,7 +50,7 @@ export const DashboardPage = () => {
           </h1>
           <p className="text-xs sm:text-sm text-[#6E5341] mt-1">
             {isAuthenticated 
-              ? `Welcome back, ${user.name}! Your tailored looks and body parameters are active.` 
+              ? `Welcome back, ${user?.name || 'Stylist'}! Your tailored looks and body parameters are active.` 
               : 'Precision 3D simulation: customize body measurements, select fabrics, and save your look.'}
           </p>
         </div>
@@ -119,7 +119,7 @@ export const DashboardPage = () => {
                 <Box className="w-5 h-5 text-[#8C6D58]" />
                 <h2 className="font-serif text-xl font-medium text-[#1C1917]">3D Fitting Canvas</h2>
                 <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-[#F3EDE2] text-[#8C6D58] border border-[#E7DEC8] font-semibold">
-                  Equipped: {costume.name}
+                  Equipped: {costume?.name || 'Garment'}
                 </span>
               </div>
               <span className="text-xs text-[#6E5341] flex items-center gap-1.5">

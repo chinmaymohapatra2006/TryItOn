@@ -6,8 +6,12 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(() => localStorage.getItem('tryiton_auth_token'));
   const [user, setUser] = useState(() => {
-    const saved = localStorage.getItem('tryiton_user');
-    return saved ? JSON.parse(saved) : null;
+    try {
+      const saved = localStorage.getItem('tryiton_user');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
   });
   const [savedLooks, setSavedLooks] = useState([]);
   const [loading, setLoading] = useState(false);

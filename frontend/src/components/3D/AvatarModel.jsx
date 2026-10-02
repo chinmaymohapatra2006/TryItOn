@@ -16,18 +16,19 @@ export const AvatarModel = ({ modelUrl = '/models/female.glb', scale = 1, positi
 
     // Apply global root rotation from poseState
     if (groupRef.current) {
-      groupRef.current.rotation.y = poseState.rotationY;
+      groupRef.current.rotation.y = poseState?.rotationY || 0;
     }
 
     // Normalize measurements relative to default baseline (assumes default avatar matches default measurements)
+    const m = measurements || defaultMeasurements;
     const norm = {
-      height: measurements.height / defaultMeasurements.height,
-      shoulder: measurements.shoulderWidth / defaultMeasurements.shoulderWidth,
-      chest: measurements.chest / defaultMeasurements.chest,
-      waist: measurements.waist / defaultMeasurements.waist,
-      hip: measurements.hip / defaultMeasurements.hip,
-      arm: (measurements.armLength || defaultMeasurements.armLength) / defaultMeasurements.armLength,
-      leg: (measurements.legLength || defaultMeasurements.legLength) / defaultMeasurements.legLength,
+      height: (m.height || defaultMeasurements.height) / (defaultMeasurements.height || 170),
+      shoulder: (m.shoulderWidth || defaultMeasurements.shoulderWidth) / (defaultMeasurements.shoulderWidth || 40),
+      chest: (m.chest || defaultMeasurements.chest) / (defaultMeasurements.chest || 90),
+      waist: (m.waist || defaultMeasurements.waist) / (defaultMeasurements.waist || 70),
+      hip: (m.hip || defaultMeasurements.hip) / (defaultMeasurements.hip || 95),
+      arm: (m.armLength || defaultMeasurements.armLength) / (defaultMeasurements.armLength || 60),
+      leg: (m.legLength || defaultMeasurements.legLength) / (defaultMeasurements.legLength || 80),
     };
 
     // Apply safe bone scaling dynamically
@@ -85,18 +86,18 @@ export const AvatarModel = ({ modelUrl = '/models/female.glb', scale = 1, positi
         // overwriting X and Z is usually safe relative to their T-pose local axes.
 
         if (name === 'mixamorig:leftarm') {
-          object.rotation.x = poseState.leftArmX;
-          object.rotation.z = poseState.leftArmZ;
+          object.rotation.x = poseState?.leftArmX || 0;
+          object.rotation.z = poseState?.leftArmZ || 0;
         }
         if (name === 'mixamorig:rightarm') {
-          object.rotation.x = poseState.rightArmX;
-          object.rotation.z = poseState.rightArmZ;
+          object.rotation.x = poseState?.rightArmX || 0;
+          object.rotation.z = poseState?.rightArmZ || 0;
         }
         if (name === 'mixamorig:leftforearm') {
-          object.rotation.z = poseState.leftForeArmZ;
+          object.rotation.z = poseState?.leftForeArmZ || 0;
         }
         if (name === 'mixamorig:rightforearm') {
-          object.rotation.z = poseState.rightForeArmZ;
+          object.rotation.z = poseState?.rightForeArmZ || 0;
         }
       }
     });
