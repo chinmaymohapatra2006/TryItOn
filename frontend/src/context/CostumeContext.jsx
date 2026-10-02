@@ -47,6 +47,18 @@ export const CostumeProvider = ({ children }) => {
     }));
   };
 
+  const updateCostume = (updates = {}) => {
+    if (updates.color !== undefined) {
+      updateActiveColor(updates.color);
+    }
+    if (updates.visible !== undefined) {
+      setVisible(updates.visible);
+    }
+    if (updates.wireframe !== undefined) {
+      setWireframe(updates.wireframe);
+    }
+  };
+
   const toggleVisibility = () => {
     setVisible(prev => !prev);
   };
@@ -74,6 +86,7 @@ export const CostumeProvider = ({ children }) => {
       costume: activeCostume,
       selectCostume,
       updateActiveColor,
+      updateCostume,
       toggleVisibility,
       toggleWireframe,
       resetCostume,

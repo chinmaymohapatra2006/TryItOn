@@ -1,9 +1,18 @@
 import React from 'react';
 import { usePose } from '../../context/PoseContext.jsx';
+import { useAuth } from '../../context/AuthContext.jsx';
 import { User, RefreshCcw } from 'lucide-react';
 
 export const PoseControls = () => {
   const { poseState, updatePose, applyPreset, resetPose } = usePose();
+  const { isAuthenticated, syncAvatar } = useAuth();
+
+  const handleApplyPreset = (preset) => {
+    applyPreset(preset);
+    if (isAuthenticated && syncAvatar) {
+      syncAvatar({ posePreset: preset, poseData: poseState });
+    }
+  };
 
   const handleSliderChange = (e) => {
     const { name, value } = e.target;
@@ -38,7 +47,7 @@ export const PoseControls = () => {
           {['t-pose', 'a-pose', 'hands-on-hips'].map((preset) => (
             <button
               key={preset}
-              onClick={() => applyPreset(preset)}
+              onClick={() => handleApplyPreset(preset)}
               className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all border ${
                 poseState.preset === preset
                   ? 'bg-[#1C1917] border-[#1C1917] text-white shadow-sm'

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useMeasurements, defaultMeasurements, BODY_PRESETS } from '../../context/MeasurementContext.jsx';
+import { useAuth } from '../../context/AuthContext.jsx';
 import { Save, RotateCcw, AlertCircle, CheckCircle2, UserCheck, Sparkles } from 'lucide-react';
 
 const limits = {
@@ -14,6 +15,7 @@ const limits = {
 
 export const MeasurementForm = () => {
   const { measurements, activePreset, updateMeasurements, applyBodyPreset, resetMeasurements } = useMeasurements();
+  const { isAuthenticated, syncMeasurements } = useAuth();
   const [formData, setFormData] = useState(measurements);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState(null);
@@ -72,10 +74,20 @@ export const MeasurementForm = () => {
       }, {});
       
       updateMeasurements(parsedData);
+      if (isAuthenticated && syncMeasurements) {
+        syncMeasurements(parsedData);
+      }
       setStatus({ type: 'success', message: 'Body parameters and garment fitting updated!' });
       setTimeout(() => setStatus(null), 3000);
     } else {
       setStatus({ type: 'error', message: 'Please fix validation errors above.' });
+    }
+  };
+
+  const handleApplyPreset = (key) => {
+    applyBodyPreset(key);
+    if (isAuthenticated && syncMeasurements && BODY_PRESETS[key]) {
+      syncMeasurements(BODY_PRESETS[key]);
     }
   };
 
@@ -142,7 +154,7 @@ export const MeasurementForm = () => {
             <button
               key={key}
               type="button"
-              onClick={() => applyBodyPreset(key)}
+              onClick={() => handleApplyPreset(key)}
               className={`px-3 py-2 rounded-xl text-xs font-semibold transition-all border text-center ${
                 activePreset === key
                   ? 'bg-[#1C1917] text-white border-[#1C1917] shadow-sm'
