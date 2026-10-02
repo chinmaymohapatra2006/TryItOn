@@ -87,23 +87,29 @@ export const MeasurementForm = () => {
 
   const InputField = ({ name, label, required }) => (
     <div className="mb-4">
-      <label className="block text-xs font-semibold text-slate-300 mb-1.5 uppercase tracking-wider">
+      <label 
+        htmlFor={`input-${name}`}
+        className="block text-xs font-semibold text-slate-300 mb-1.5 uppercase tracking-wider"
+      >
         {label} {required && <span className="text-purple-400">*</span>}
       </label>
       <div className="relative">
         <input
+          id={`input-${name}`}
           type="number"
           name={name}
           value={formData[name] === null ? '' : formData[name]}
           onChange={handleChange}
           step="0.5"
+          aria-invalid={Boolean(errors[name])}
+          aria-describedby={errors[name] ? `error-${name}` : undefined}
           className={`w-full bg-slate-900 border ${errors[name] ? 'border-rose-500 focus:ring-rose-500' : 'border-slate-700 focus:ring-purple-500'} rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 transition-all`}
           placeholder={`e.g. ${defaultMeasurements[name]}`}
         />
         <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-500 font-mono pointer-events-none">cm</span>
       </div>
       {errors[name] && (
-        <p className="mt-1.5 text-xs text-rose-400 flex items-start gap-1">
+        <p id={`error-${name}`} className="mt-1.5 text-xs text-rose-400 flex items-start gap-1" role="alert">
           <AlertCircle className="w-3.5 h-3.5 shrink-0 mt-0.5" />
           <span>{errors[name]}</span>
         </p>

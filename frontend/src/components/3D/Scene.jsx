@@ -1,6 +1,7 @@
 import React, { Suspense, useRef, useState, useCallback } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Html } from '@react-three/drei';
+import { OrbitControls, Html, useProgress } from '@react-three/drei';
+import * as THREE from 'three';
 import Camera from './Camera.jsx';
 import Lighting from './Lighting.jsx';
 import FloorGrid from './FloorGrid.jsx';
@@ -19,15 +20,31 @@ import {
   HelpCircle
 } from 'lucide-react';
 
+// Enable global Three.js memory cache for parsed GLTF assets
+THREE.Cache.enabled = true;
+
 /**
- * 3D Loading Fallback indicator inside Three.js Canvas
+ * 3D Loading Fallback indicator with live progress percentage
  */
 const CanvasLoader = () => {
+  const { progress } = useProgress();
   return (
     <Html center>
-      <div className="flex flex-col items-center gap-3 p-4 rounded-2xl bg-slate-900/90 border border-slate-700/80 backdrop-blur shadow-2xl min-w-[160px]">
+      <div 
+        role="status"
+        aria-live="polite"
+        className="flex flex-col items-center gap-2.5 p-4 rounded-2xl bg-slate-950/90 border border-slate-800 backdrop-blur shadow-2xl min-w-[170px]"
+      >
         <div className="w-8 h-8 rounded-full border-2 border-purple-500 border-t-transparent animate-spin" />
-        <span className="text-xs font-semibold text-purple-200">Loading 3D Mesh...</span>
+        <span className="text-xs font-semibold text-purple-200">
+          Loading 3D Mesh... {progress > 0 ? `${progress.toFixed(0)}%` : ''}
+        </span>
+        <div className="w-28 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+          <div 
+            className="h-full bg-gradient-to-r from-purple-500 to-indigo-500 transition-all duration-300"
+            style={{ width: `${Math.max(progress, 8)}%` }}
+          />
+        </div>
       </div>
     </Html>
   );
@@ -235,6 +252,10 @@ export const Scene = ({
             maxDistance={7.0}
             maxPolarAngle={Math.PI / 2 + 0.05} // Do not clip under the floor
             target={[0, 1.1, 0]} // Center rotation on torso
+            touches={{
+              ONE: THREE.TOUCH.ROTATE,
+              TWO: THREE.TOUCH.DOLLY_PAN,
+            }}
           />
         </Canvas>
       </div>
