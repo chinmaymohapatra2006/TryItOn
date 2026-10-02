@@ -22,13 +22,20 @@ export const AuthProvider = ({ children }) => {
     if (!authToken) return;
     try {
       const res = await fetch(`${API_BASE_URL}/user/profile`, {
-        headers: { 'Authorization': `Bearer ${authToken}` }
+        headers: { 
+          'Authorization': `Bearer ${authToken}`,
+          'Cache-Control': 'no-cache'
+        }
       });
       if (res.ok) {
         const json = await res.json();
-        setUser(json.data.user);
-        setSavedLooks(json.data.savedLooks || []);
-        localStorage.setItem('tryiton_user', JSON.stringify(json.data.user));
+        if (json?.data?.user) {
+          setUser(json.data.user);
+          localStorage.setItem('tryiton_user', JSON.stringify(json.data.user));
+        }
+        if (Array.isArray(json?.data?.savedLooks)) {
+          setSavedLooks(json.data.savedLooks);
+        }
       } else if (res.status === 401) {
         logout();
       }
@@ -56,10 +63,11 @@ export const AuthProvider = ({ children }) => {
       if (!res.ok) throw new Error(data.message || 'Login failed');
 
       setToken(data.token);
-      setUser(data.data.user);
+      if (data.data?.user) {
+        setUser(data.data.user);
+        localStorage.setItem('tryiton_user', JSON.stringify(data.data.user));
+      }
       localStorage.setItem('tryiton_auth_token', data.token);
-      localStorage.setItem('tryiton_user', JSON.stringify(data.data.user));
-      await refreshProfile(data.token);
       return data;
     } catch (err) {
       setAuthError(err.message);
@@ -82,10 +90,11 @@ export const AuthProvider = ({ children }) => {
       if (!res.ok) throw new Error(data.message || 'Registration failed');
 
       setToken(data.token);
-      setUser(data.data.user);
+      if (data.data?.user) {
+        setUser(data.data.user);
+        localStorage.setItem('tryiton_user', JSON.stringify(data.data.user));
+      }
       localStorage.setItem('tryiton_auth_token', data.token);
-      localStorage.setItem('tryiton_user', JSON.stringify(data.data.user));
-      await refreshProfile(data.token);
       return data;
     } catch (err) {
       setAuthError(err.message);

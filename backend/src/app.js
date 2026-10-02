@@ -50,8 +50,16 @@ app.get('/', (req, res, next) => {
   next();
 });
 
-// API Routes
-app.use('/api', apiRouter);
+// Disable ETag on dynamic API routes to avoid 304 empty body responses on client fetch
+app.set('etag', false);
+
+// API Routes with no-store header to ensure fresh payloads
+app.use('/api', (req, res, next) => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+  next();
+}, apiRouter);
 
 // Production Static Delivery & Client-side Routing Fallback for HTML clients
 if (hasFrontendDist) {
