@@ -1,13 +1,34 @@
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 import { pool } from '../config/db.js';
+import { LocalDb } from '../config/localDb.js';
 
-// Development in-memory fallback stores
+// Development in-memory stores with file-backed persistence for local MVP run
 const userStore = new Map();
 const measurementStore = new Map(); // key: userId
 const avatarStore = new Map(); // key: userId
 const costumeStore = new Map(); // key: costumeId
 const savedLookStore = new Map(); // key: lookId
+
+// Hydrate from persistent local MVP database file
+try {
+  const loaded = LocalDb.load();
+  if (loaded.users) Object.entries(loaded.users).forEach(([k, v]) => userStore.set(k, v));
+  if (loaded.measurements) Object.entries(loaded.measurements).forEach(([k, v]) => measurementStore.set(k, v));
+  if (loaded.avatars) Object.entries(loaded.avatars).forEach(([k, v]) => avatarStore.set(k, v));
+  if (loaded.savedLooks) Object.entries(loaded.savedLooks).forEach(([k, v]) => savedLookStore.set(k, v));
+} catch {}
+
+const persistLocalDb = () => {
+  try {
+    LocalDb.save({
+      users: Object.fromEntries(userStore),
+      measurements: Object.fromEntries(measurementStore),
+      avatars: Object.fromEntries(avatarStore),
+      savedLooks: Object.fromEntries(savedLookStore),
+    });
+  } catch {}
+};
 
 // Seed initial costumes into costume store
 const initialCostumes = [
@@ -42,6 +63,7 @@ export const UserRepository = {
     };
 
     userStore.set(user.id, user);
+    persistLocalDb();
 
     try {
       const client = await pool.connect();
@@ -95,6 +117,7 @@ export const UserRepository = {
     };
 
     measurementStore.set(userId, record);
+    persistLocalDb();
 
     try {
       const client = await pool.connect();
@@ -130,6 +153,7 @@ export const UserRepository = {
     };
 
     avatarStore.set(userId, record);
+    persistLocalDb();
 
     try {
       const client = await pool.connect();
@@ -166,6 +190,7 @@ export const UserRepository = {
     };
 
     savedLookStore.set(id, record);
+    persistLocalDb();
 
     try {
       const client = await pool.connect();

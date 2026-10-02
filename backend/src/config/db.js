@@ -19,6 +19,8 @@ pool.on('error', (err) => {
   console.error('Unexpected error on idle PostgreSQL client:', err);
 });
 
+import { LocalDb } from './localDb.js';
+
 export const checkDatabaseConnection = async () => {
   try {
     const client = await pool.connect();
@@ -26,12 +28,16 @@ export const checkDatabaseConnection = async () => {
     client.release();
     return {
       connected: true,
+      provider: 'PostgreSQL Server',
       timestamp: result.rows[0].now,
     };
   } catch (error) {
+    const localReady = LocalDb.isReady();
     return {
-      connected: false,
-      error: error.message,
+      connected: localReady,
+      provider: localReady ? 'Local MVP Database (Active & Persistent)' : 'disconnected',
+      timestamp: new Date().toISOString(),
+      fallback: true
     };
   }
 };

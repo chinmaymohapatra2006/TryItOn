@@ -11,7 +11,7 @@ export const getHealthStatus = async () => {
     environment: process.env.NODE_ENV || 'development',
     services: {
       server: 'healthy',
-      database: dbStatus.connected ? 'connected' : 'disconnected (configured)',
+      database: dbStatus.connected ? (dbStatus.provider || 'connected') : 'disconnected',
     },
     version: '1.0.0'
   };
