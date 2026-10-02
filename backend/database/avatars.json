@@ -1,0 +1,30 @@
+[
+  {
+    "id": "AVT001",
+    "userId": "USR001",
+    "measurementId": "MEAS001",
+    "type": "2D",
+    "gender": "male",
+    "height": 175,
+    "skinTone": "medium",
+    "bodyType": "average",
+    "faceImage": "/uploads/faces/usr001.jpg",
+    "avatarImage": "/results/avatars/usr001.png",
+    "status": "ready",
+    "createdAt": "2026-10-02T10:20:00Z"
+  },
+  {
+    "id": "AVT002",
+    "userId": "USR002",
+    "measurementId": "MEAS002",
+    "type": "2D",
+    "gender": "female",
+    "height": 165,
+    "skinTone": "medium",
+    "bodyType": "average",
+    "faceImage": "/uploads/faces/usr002.jpg",
+    "avatarImage": "/results/avatars/usr002.png",
+    "status": "ready",
+    "createdAt": "2026-10-02T10:25:00Z"
+  }
+]

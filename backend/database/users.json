@@ -1,0 +1,18 @@
+[
+  {
+    "id": "USR001",
+    "name": "Chinmay Mohapatra",
+    "email": "chinmay@example.com",
+    "gender": "male",
+    "age": 21,
+    "createdAt": "2026-10-02T10:00:00Z"
+  },
+  {
+    "id": "USR002",
+    "name": "Demo User",
+    "email": "demo@example.com",
+    "gender": "female",
+    "age": 22,
+    "createdAt": "2026-10-02T10:05:00Z"
+  }
+]

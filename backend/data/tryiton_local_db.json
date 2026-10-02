@@ -23,6 +23,14 @@
       "name": "Aria Sharma",
       "created_at": "2026-10-02T11:13:00.810Z",
       "updated_at": "2026-10-02T11:13:00.810Z"
+    },
+    "user_36e5b1fc-371d-409b-9c38-e41b2743864d": {
+      "id": "user_36e5b1fc-371d-409b-9c38-e41b2743864d",
+      "email": "test@tryiton.local",
+      "password_hash": "$2b$10$tKqaFKbWkmYbbj89QlXUguZQSI8ym6GjUN0pT.2mfJR4epnzkPhUW",
+      "name": "TryItOn Test User",
+      "created_at": "2026-10-02T11:39:58.151Z",
+      "updated_at": "2026-10-02T11:39:58.151Z"
     }
   },
   "measurements": {

@@ -1,0 +1,15 @@
+# TryItOn Root Environment Configuration Reference
+
+# Backend (.env located in /backend)
+PORT=5000
+NODE_ENV=development
+CLIENT_URL=http://localhost:5173
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=tryiton_db
+DB_USER=postgres
+DB_PASSWORD=postgres
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/tryiton_db
+
+# Frontend (.env located in /frontend)
+VITE_API_URL=/api

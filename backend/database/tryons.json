@@ -1,0 +1,32 @@
+[
+  {
+    "id": "TRY001",
+    "userId": "USR001",
+    "avatarId": "AVT001",
+    "costumeId": "CST001",
+    "status": "completed",
+    "resultImage": "/results/tryons/TRY001.png",
+    "cloudinaryPublicId": "tryiton/tryons/TRY001",
+    "createdAt": "2026-10-02T10:30:00Z"
+  },
+  {
+    "id": "TRY002",
+    "userId": "USR001",
+    "avatarId": "AVT001",
+    "costumeId": "CST002",
+    "status": "completed",
+    "resultImage": "/results/tryons/TRY002.png",
+    "cloudinaryPublicId": "tryiton/tryons/TRY002",
+    "createdAt": "2026-10-02T10:35:00Z"
+  },
+  {
+    "id": "TRY003",
+    "userId": "USR002",
+    "avatarId": "AVT002",
+    "costumeId": "CST003",
+    "status": "completed",
+    "resultImage": "/results/tryons/TRY003.png",
+    "cloudinaryPublicId": "tryiton/tryons/TRY003",
+    "createdAt": "2026-10-02T10:40:00Z"
+  }
+]
