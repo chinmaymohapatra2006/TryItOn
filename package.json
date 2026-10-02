@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "description": "TryItOn - 3D Virtual Costume Try-On Web Application",
+  "type": "module",
   "scripts": {
     "install:backend": "npm --prefix backend install",
     "install:frontend": "npm --prefix frontend install",
@@ -10,7 +11,8 @@
     "dev:backend": "npm --prefix backend run dev",
     "dev:frontend": "npm --prefix frontend run dev",
     "test:backend": "npm --prefix backend test",
-    "build:frontend": "npm --prefix frontend run build"
+    "build:frontend": "npm --prefix frontend run build",
+    "test:e2e": "node scripts/verify_deployment.js"
   },
   "keywords": [
     "tryiton",
