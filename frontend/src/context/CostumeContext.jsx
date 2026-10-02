@@ -1,34 +1,85 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useMemo } from 'react';
+import { COSTUME_CATALOG, COSTUME_CATEGORIES, getCostumeMetadata } from '../config/costumeMetadata.js';
 
 const CostumeContext = createContext();
 
-export const defaultCostume = {
-  id: 'casual-shirt',
-  name: 'Casual Silk Shirt',
-  category: 'Tops',
-  modelUrl: '/costumes/shirt-female.glb',
-  visible: true,
-  color: '#6366f1',
-  wireframe: false,
-};
-
 export const CostumeProvider = ({ children }) => {
-  const [costume, setCostume] = useState(defaultCostume);
+  const [selectedCostumeId, setSelectedCostumeId] = useState('shirt-female');
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [colorOverrides, setColorOverrides] = useState({});
+  const [visible, setVisible] = useState(true);
+  const [wireframe, setWireframe] = useState(false);
+  const [isLoadingCostume, setIsLoadingCostume] = useState(false);
+  const [costumeError, setCostumeError] = useState(null);
 
-  const toggleVisibility = () => {
-    setCostume((prev) => ({ ...prev, visible: !prev.visible }));
+  // Active costume object with applied colorway overrides
+  const activeCostume = useMemo(() => {
+    const base = getCostumeMetadata(selectedCostumeId);
+    const activeColor = colorOverrides[selectedCostumeId] || base.defaultColor;
+    return {
+      ...base,
+      color: activeColor,
+      visible,
+      wireframe
+    };
+  }, [selectedCostumeId, colorOverrides, visible, wireframe]);
+
+  // Filtered catalog by active category
+  const filteredCatalog = useMemo(() => {
+    if (selectedCategory === 'All') return COSTUME_CATALOG;
+    return COSTUME_CATALOG.filter(c => c.category === selectedCategory);
+  }, [selectedCategory]);
+
+  const selectCostume = (id) => {
+    if (id === selectedCostumeId) return;
+    setIsLoadingCostume(true);
+    setCostumeError(null);
+    setSelectedCostumeId(id);
+    // Loading state is cleanly resolved when R3F finishes compiling the new mesh
+    setTimeout(() => setIsLoadingCostume(false), 250);
   };
 
-  const updateCostume = (updates) => {
-    setCostume((prev) => ({ ...prev, ...updates }));
+  const updateActiveColor = (color) => {
+    setColorOverrides(prev => ({
+      ...prev,
+      [selectedCostumeId]: color
+    }));
+  };
+
+  const toggleVisibility = () => {
+    setVisible(prev => !prev);
+  };
+
+  const toggleWireframe = () => {
+    setWireframe(prev => !prev);
   };
 
   const resetCostume = () => {
-    setCostume(defaultCostume);
+    setSelectedCostumeId('shirt-female');
+    setColorOverrides({});
+    setVisible(true);
+    setWireframe(false);
+    setCostumeError(null);
   };
 
   return (
-    <CostumeContext.Provider value={{ costume, toggleVisibility, updateCostume, resetCostume }}>
+    <CostumeContext.Provider value={{
+      catalog: COSTUME_CATALOG,
+      categories: COSTUME_CATEGORIES,
+      filteredCatalog,
+      selectedCategory,
+      setSelectedCategory,
+      selectedCostumeId,
+      costume: activeCostume,
+      selectCostume,
+      updateActiveColor,
+      toggleVisibility,
+      toggleWireframe,
+      resetCostume,
+      isLoadingCostume,
+      costumeError,
+      setCostumeError
+    }}>
       {children}
     </CostumeContext.Provider>
   );

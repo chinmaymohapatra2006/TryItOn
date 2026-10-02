@@ -7,6 +7,7 @@ import FloorGrid from './FloorGrid.jsx';
 import AvatarModel from './AvatarModel.jsx';
 import CostumeModel from './CostumeModel.jsx';
 import ErrorBoundary3D from './ErrorBoundary3D.jsx';
+import { useCostume } from '../../context/CostumeContext.jsx';
 import { 
   RotateCw, 
   Eye, 
@@ -43,6 +44,7 @@ export const Scene = ({
   className = "w-full h-full min-h-[460px]",
 }) => {
   const controlsRef = useRef();
+  const { costume } = useCostume();
   const [autoRotate, setAutoRotate] = useState(autoRotateDefault);
   const [showGrid, setShowGrid] = useState(showGridDefault);
   const [wireframe, setWireframe] = useState(false);
@@ -216,7 +218,7 @@ export const Scene = ({
               scale={1}
             />
             <CostumeModel
-              modelUrl="/costumes/shirt-female.glb"
+              key={costume.id}
               position={[0, 0, 0]}
               scale={1}
             />

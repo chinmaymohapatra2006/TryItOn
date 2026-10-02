@@ -9,7 +9,6 @@ import {
   Sparkles,
   ShieldAlert,
   CheckCircle2,
-  Lock,
   Box,
   Compass
 } from 'lucide-react';
@@ -17,6 +16,7 @@ import { Scene } from '../components/3D/index.js';
 import MeasurementForm from '../components/AvatarCustomizer/MeasurementForm.jsx';
 import PoseControls from '../components/AvatarCustomizer/PoseControls.jsx';
 import CostumeControls from '../components/AvatarCustomizer/CostumeControls.jsx';
+import CostumeCatalog from '../components/CostumeLibrary/CostumeCatalog.jsx';
 
 export const DashboardPage = () => {
   const { healthData, loading, error, latency, lastChecked, refresh } = useApiHealth(false);
@@ -28,13 +28,13 @@ export const DashboardPage = () => {
         <div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-purple-950/40 text-purple-400 text-xs font-semibold mb-2 border border-purple-800/30">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Phase 1 • 3D Viewport Core</span>
+            <span>Phase 7 • 3D Virtual Wardrobe Studio</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-            TryItOn 3D Virtual Fitting Studio
+            TryItOn Virtual Costume Try-On
           </h1>
           <p className="text-sm text-slate-400 mt-1">
-            Real-time WebGL canvas, Three.js studio lighting, orbit controls, and live system monitoring.
+            Seamless multi-garment wardrobe library, real-time fitting engine, and anatomical customizer.
           </p>
         </div>
 
@@ -48,50 +48,49 @@ export const DashboardPage = () => {
         </button>
       </div>
 
-      {/* Main Grid: 3D Viewport on Left (2 cols), Diagnostics & Roadmaps on Right (1 col) */}
+      {/* Main Grid: Left Column (3D Viewport + Wardrobe Catalog), Right Column (Controls) */}
       <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
         
-        {/* Left Column: Core 3D Viewport Studio */}
-        <div className="lg:col-span-2 flex flex-col gap-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Box className="w-5 h-5 text-purple-400" />
-              <h2 className="text-lg font-bold text-white">3D Fitting Canvas</h2>
+        {/* Left Column: 3D Canvas Studio & Costume Catalog */}
+        <div className="lg:col-span-2 flex flex-col gap-8">
+          {/* 3D Viewport Section */}
+          <div className="flex flex-col gap-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Box className="w-5 h-5 text-purple-400" />
+                <h2 className="text-lg font-bold text-white">3D Fitting Canvas</h2>
+              </div>
+              <span className="text-xs text-slate-400 flex items-center gap-1.5">
+                <Compass className="w-3.5 h-3.5 text-indigo-400" />
+                <span>Full 360° Orbit & Zoom Enabled</span>
+              </span>
             </div>
-            <span className="text-xs text-slate-400 flex items-center gap-1.5">
-              <Compass className="w-3.5 h-3.5 text-indigo-400" />
-              <span>Full 360° Orbit & Zoom Enabled</span>
-            </span>
+
+            {/* 3D Scene Viewport */}
+            <div className="h-[520px] w-full">
+              <Scene
+                autoRotateDefault={false}
+                showGridDefault={true}
+                className="w-full h-full shadow-2xl"
+              />
+            </div>
           </div>
 
-          {/* 3D Scene Container */}
-          <div className="h-[520px] w-full">
-            <Scene
-              autoRotateDefault={false}
-              showGridDefault={true}
-              className="w-full h-full shadow-2xl"
-            />
-          </div>
-
-          {/* Viewport Features Legend */}
-          <div className="grid grid-cols-3 gap-3 text-center">
-            <div className="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
-              <span className="text-[11px] text-slate-400">Rendering Engine</span>
-              <p className="text-xs font-bold text-slate-200 mt-0.5">Three.js + R3F</p>
-            </div>
-            <div className="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
-              <span className="text-[11px] text-slate-400">Controls</span>
-              <p className="text-xs font-bold text-slate-200 mt-0.5">Drei OrbitControls</p>
-            </div>
-            <div className="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
-              <span className="text-[11px] text-slate-400">Studio Rig</span>
-              <p className="text-xs font-bold text-slate-200 mt-0.5">3-Point + Contact Shadow</p>
-            </div>
-          </div>
+          {/* Data-Driven Costume Library Catalog (Phase 7) */}
+          <CostumeCatalog />
         </div>
 
-        {/* Right Column: API Health & Upcoming Modules */}
+        {/* Right Column: Customization, Posing & Diagnostics */}
         <div className="space-y-6">
+          {/* 3D Costume Fitting Engine Controls (Phase 5/6) */}
+          <CostumeControls />
+
+          {/* Body Measurements & Fitting Profiles (Phase 3/6) */}
+          <MeasurementForm />
+
+          {/* Avatar Posing Controls (Phase 4) */}
+          <PoseControls />
+
           {/* API Health Monitor Card */}
           <div className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800/90 backdrop-blur">
             <div className="flex items-center justify-between pb-4 border-b border-slate-800">
@@ -137,7 +136,7 @@ export const DashboardPage = () => {
               </div>
             </div>
 
-            {/* Sub-services breakdown */}
+            {/* Sub-services */}
             <div className="mt-4 p-3 rounded-xl bg-slate-950/40 border border-slate-800 space-y-2 text-xs">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-1.5 text-slate-300">
@@ -157,38 +156,6 @@ export const DashboardPage = () => {
                 <span className="px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-mono text-[11px]">
                   {healthData?.services?.database || 'configured'}
                 </span>
-              </div>
-            </div>
-          </div>
-
-          {/* 3D Costume Fitting Controls (Phase 5) */}
-          <CostumeControls />
-
-          {/* Measurement Form (Phase 3) */}
-          <MeasurementForm />
-
-          {/* Pose Controls (Phase 4) */}
-          <PoseControls />
-          <div className="p-5 rounded-2xl bg-slate-900/60 border border-slate-800 text-xs">
-            <h3 className="font-bold uppercase tracking-wider text-slate-400 mb-3">
-              3D Architecture Specs
-            </h3>
-            <div className="space-y-2 text-slate-400">
-              <div className="flex justify-between py-1 border-b border-slate-800/50">
-                <span>WebGL Canvas:</span>
-                <span className="text-slate-200 font-mono">React Three Fiber 8</span>
-              </div>
-              <div className="flex justify-between py-1 border-b border-slate-800/50">
-                <span>Helpers & Controls:</span>
-                <span className="text-slate-200 font-mono">Drei 9</span>
-              </div>
-              <div className="flex justify-between py-1 border-b border-slate-800/50">
-                <span>Shadows:</span>
-                <span className="text-slate-200 font-mono">Soft ContactShadows</span>
-              </div>
-              <div className="flex justify-between py-1">
-                <span>Camera:</span>
-                <span className="text-slate-200 font-mono">Perspective (FOV 45°)</span>
               </div>
             </div>
           </div>
