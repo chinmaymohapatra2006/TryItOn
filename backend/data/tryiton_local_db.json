@@ -7,6 +7,22 @@
       "name": "Mira Kapoor",
       "created_at": "2026-10-02T11:05:31.708Z",
       "updated_at": "2026-10-02T11:05:31.708Z"
+    },
+    "user_254dc64a-cc89-4dac-b88e-05d28cf5ae4d": {
+      "id": "user_254dc64a-cc89-4dac-b88e-05d28cf5ae4d",
+      "email": "a@gmail.com",
+      "password_hash": "$2b$10$Q4EuGTxxrYoRXNGTlbpxYOwhEGdQFefLgz8WwNat46OeKXtW1er0m",
+      "name": "Krish",
+      "created_at": "2026-10-02T11:09:33.788Z",
+      "updated_at": "2026-10-02T11:09:33.788Z"
+    },
+    "user_04c83de7-275b-4c92-b2f0-03959a6f7c42": {
+      "id": "user_04c83de7-275b-4c92-b2f0-03959a6f7c42",
+      "email": "fashion_user_1790939580655@example.com",
+      "password_hash": "$2b$10$Xru6.uT7N9y.wXRNNMudIuBEGFLQRNt4TgX7I5bhumwT5iw5690bC",
+      "name": "Aria Sharma",
+      "created_at": "2026-10-02T11:13:00.810Z",
+      "updated_at": "2026-10-02T11:13:00.810Z"
     }
   },
   "measurements": {
@@ -23,6 +39,34 @@
       "unit": "cm",
       "created_at": "2026-10-02T11:05:31.914Z",
       "updated_at": "2026-10-02T11:05:31.914Z"
+    },
+    "user_254dc64a-cc89-4dac-b88e-05d28cf5ae4d": {
+      "id": "meas_user_254dc64a-cc89-4dac-b88e-05d28cf5ae4d",
+      "user_id": "user_254dc64a-cc89-4dac-b88e-05d28cf5ae4d",
+      "height": 170,
+      "shoulder_width": 40,
+      "chest": 90,
+      "waist": 70,
+      "hip": 95,
+      "arm_length": 60,
+      "leg_length": 80,
+      "unit": "cm",
+      "created_at": "2026-10-02T11:11:51.685Z",
+      "updated_at": "2026-10-02T11:11:51.685Z"
+    },
+    "user_04c83de7-275b-4c92-b2f0-03959a6f7c42": {
+      "id": "meas_user_04c83de7-275b-4c92-b2f0-03959a6f7c42",
+      "user_id": "user_04c83de7-275b-4c92-b2f0-03959a6f7c42",
+      "height": 172.5,
+      "shoulder_width": 41,
+      "chest": 92,
+      "waist": 72,
+      "hip": 96,
+      "arm_length": 61,
+      "leg_length": 82,
+      "unit": "cm",
+      "created_at": "2026-10-02T11:13:01.116Z",
+      "updated_at": "2026-10-02T11:13:01.116Z"
     }
   },
   "avatars": {
@@ -39,6 +83,34 @@
       },
       "created_at": "2026-10-02T11:05:32.090Z",
       "updated_at": "2026-10-02T11:05:32.090Z"
+    },
+    "user_254dc64a-cc89-4dac-b88e-05d28cf5ae4d": {
+      "id": "avatar_user_254dc64a-cc89-4dac-b88e-05d28cf5ae4d",
+      "user_id": "user_254dc64a-cc89-4dac-b88e-05d28cf5ae4d",
+      "model_gender": "female",
+      "model_url": "/models/female.glb",
+      "pose_preset": "t-pose",
+      "pose_data": {
+        "rotationY": 0,
+        "leftArmZ": 0,
+        "rightArmZ": 0
+      },
+      "created_at": "2026-10-02T11:11:51.765Z",
+      "updated_at": "2026-10-02T11:11:51.765Z"
+    },
+    "user_04c83de7-275b-4c92-b2f0-03959a6f7c42": {
+      "id": "avatar_user_04c83de7-275b-4c92-b2f0-03959a6f7c42",
+      "user_id": "user_04c83de7-275b-4c92-b2f0-03959a6f7c42",
+      "model_gender": "female",
+      "model_url": "/models/female.glb",
+      "pose_preset": "a-pose",
+      "pose_data": {
+        "leftArmZ": 1.1,
+        "rightArmZ": -1.1,
+        "rotationY": 0.5
+      },
+      "created_at": "2026-10-02T11:13:01.327Z",
+      "updated_at": "2026-10-02T11:13:01.327Z"
     }
   },
   "savedLooks": {
@@ -67,6 +139,19 @@
       },
       "created_at": "2026-10-02T11:05:32.363Z",
       "updated_at": "2026-10-02T11:05:32.363Z"
+    },
+    "look_1283f0ee-2766-4cbc-bc2e-0425e6404568": {
+      "id": "look_1283f0ee-2766-4cbc-bc2e-0425e6404568",
+      "user_id": "user_04c83de7-275b-4c92-b2f0-03959a6f7c42",
+      "costume_id": "kurta-female",
+      "look_name": "Diwali Festive Glamour",
+      "colorway": "#d97706",
+      "custom_parameters": {
+        "fit": "custom-fitted",
+        "fabric": "silk"
+      },
+      "created_at": "2026-10-02T11:13:01.431Z",
+      "updated_at": "2026-10-02T11:13:01.431Z"
     }
   }
 }

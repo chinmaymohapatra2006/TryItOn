@@ -82,11 +82,35 @@ export const login = async (req, res, next) => {
 export const getProfile = async (req, res, next) => {
   try {
     const userId = req.user.id;
-    const [measurements, avatar, looks] = await Promise.all([
+    let [measurements, avatar, looks] = await Promise.all([
       UserRepository.getMeasurements(userId),
       UserRepository.getAvatar(userId),
       UserRepository.getSavedLooks(userId)
     ]);
+
+    // Auto-seed default MVP measurements if not yet created for this user
+    if (!measurements) {
+      measurements = await UserRepository.saveMeasurements(userId, {
+        height: 170,
+        shoulderWidth: 40,
+        chest: 90,
+        waist: 70,
+        hip: 95,
+        armLength: 60,
+        legLength: 80,
+        unit: 'cm'
+      });
+    }
+
+    // Auto-seed default MVP avatar configuration if not yet created
+    if (!avatar) {
+      avatar = await UserRepository.saveAvatar(userId, {
+        modelGender: 'female',
+        modelUrl: '/models/female.glb',
+        posePreset: 't-pose',
+        poseData: { rotationY: 0, leftArmZ: 0, rightArmZ: 0 }
+      });
+    }
 
     return res.status(200).json({
       status: 'success',
@@ -94,7 +118,7 @@ export const getProfile = async (req, res, next) => {
         user: req.user,
         measurements,
         avatar,
-        savedLooks: looks
+        savedLooks: looks || []
       }
     });
   } catch (error) {

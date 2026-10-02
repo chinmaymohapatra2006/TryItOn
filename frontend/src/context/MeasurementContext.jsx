@@ -48,7 +48,13 @@ export const MeasurementProvider = ({ children }) => {
   const [measurements, setMeasurements] = useState(() => {
     try {
       const saved = sessionStorage.getItem('tryiton_measurements');
-      return saved ? JSON.parse(saved) : defaultMeasurements;
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed && typeof parsed === 'object' && parsed.height) {
+          return { ...defaultMeasurements, ...parsed };
+        }
+      }
+      return defaultMeasurements;
     } catch {
       return defaultMeasurements;
     }
