@@ -1,0 +1,19 @@
+{
+  "name": "tryiton-root",
+  "version": "1.0.0",
+  "description": "TryItOn - AI-Powered Virtual Trial Room",
+  "scripts": {
+    "dev:server": "npm --prefix server run dev",
+    "dev:client": "npm --prefix client run dev",
+    "dev": "concurrently -n \"SERVER,CLIENT\" -c \"blue,green\" \"npm --prefix server run dev\" \"npm --prefix client run dev\"",
+    "start": "npm --prefix server start",
+    "install:all": "npm install && npm --prefix server install && npm --prefix client install",
+    "test": "npm --prefix server test"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "keywords": ["virtual-try-on", "ai", "cloudinary", "react", "express", "sqlite"],
+  "author": "TryItOn Team",
+  "license": "ISC"
+}
